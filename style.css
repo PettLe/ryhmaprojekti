@@ -1,3 +1,7 @@
 .nav-link:hover {
     cursor: pointer;
 }
+
+p {
+    white-space: pre;
+}

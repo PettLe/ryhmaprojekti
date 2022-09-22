@@ -1,5 +1,4 @@
 function ajastin() {
-    // Ajastin
     var countDownDate = new Date("Nov 21, 2022 08:00:00").getTime();
     
     // Päivitetään sekunnin välein
@@ -13,6 +12,7 @@ function ajastin() {
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
         
         const timer = document.getElementById("timer");
+        timer.classList.add("fs-3", "fw-semibold")
         timer.innerHTML =
         days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
         

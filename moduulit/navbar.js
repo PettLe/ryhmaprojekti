@@ -1,7 +1,10 @@
 import kaikkiSoittimet from "./kaikkiSoittimet.js"
 import lisaaSoitin from "./lisaaSoitin.js"
+import etusivu from "./etusivu.js"
 
 function NavBar() {
+    // Etsitään index.html:stä tyhjä UL, luodaan yksitellen Li-muodossa linkit ja lisätään ne sitten UL:ään.
+    // Jokaiseen linkkiin laitetaan myös "EventListener", joka klikatessa kutsuu muualta importattua funktiota
     let navbar = document.getElementById("navBar")
     
         let link1 = document.createElement("li")
@@ -9,7 +12,7 @@ function NavBar() {
         link1.textContent = "Etusivu"
         navbar.appendChild(link1)
         link1.addEventListener("click", () => {
-            window.location.reload();
+            etusivu()
         })
 
         let link2 = document.createElement("li")
@@ -20,6 +23,7 @@ function NavBar() {
             lisaaSoitin()
         })
 
+        // HUOM! Tämä vie yhä samaan paikkaan kuin "Kaikki soittimet" -linkki
         let link3 = document.createElement("li")
         link3.classList.add("nav-link")
         link3.textContent = "Hae soitinta"
