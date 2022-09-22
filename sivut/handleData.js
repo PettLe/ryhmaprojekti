@@ -41,6 +41,11 @@ function addInstrument(instrument, brand, model, year) {
         const drums = new Rummut(brand, model, year)
         rummut.push(drums)
     }
+
+    // Instrumentit on sanakirja/objekti, johon lisätään jokaisen soitintyypin omat listat
+    instrumentit["kitarat"] = kitarat
+    instrumentit["bassot"] = bassot
+    instrumentit["rummut"] = rummut
 }
 
 // Kovakoodataan muutama instrumentti
@@ -48,11 +53,6 @@ addInstrument("guitar", "Gibson", "Les Paul", 1969)
 addInstrument("drums", "Pearl", "En tiedä rummuista mitään", 2018)
 addInstrument("guitar", "Fender", "Stratocaster", 1971)
 addInstrument("bass", "Ibanez", "Hevikeppi", 2012)
-
-// Instrumentit on sanakirja/objekti, johon lisätään jokaisen soitintyypin omat listat
-instrumentit["kitarat"] = kitarat
-instrumentit["bassot"] = bassot
-instrumentit["rummut"] = rummut
 
 
 // Kahden for loopin avulla tulostetaan consoleen instrumentit
@@ -63,4 +63,4 @@ function logDataTest() {
         }
     }
 } 
-export default logDataTest;
+export { instrumentit, logDataTest };

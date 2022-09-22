@@ -1,3 +1,3 @@
 # ryhmaprojekti
 
-Testing Git
+Nettisivun luonnissa pääpaino JavaScriptin käytössä.
