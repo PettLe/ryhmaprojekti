@@ -1,4 +1,4 @@
-import {addInstrument} from "./handleData.js"
+import {luoSoitin} from "./handleData.js"
 
 function lisaaSoitin() {
     // Etsitään HTML:stä id:n perusteella mainContent boksi. Tyhjennetään sen innerHTML. Luodaan Form mukamas helpottamaan elämää. (Spoiler alert, ei helpottanut.)
@@ -86,7 +86,7 @@ function lisaaSoitin() {
     submitDiv.appendChild(submitBtn)
     
     // Submit-nappulaa painaessa kerätään tiedot .valuen avulla jokaisesta kentästä. Jos jokainen kenttä on täytetty niin
-    // niin kutsutaan addInstrument-funktiota lisäämään tiedot tietokantaan. Sen jälkeen nollataan Form.
+    // niin kutsutaan luoSoitin-funktiota lisäämään tiedot tietokantaan. Sen jälkeen nollataan Form.
     submitBtn.addEventListener("click", () => {
         let tyyppiInfo = tyyppi.value
         let brandInfo = brand.value
@@ -94,7 +94,7 @@ function lisaaSoitin() {
         let yearInfo = year.value
         
         if (brandInfo.length > 1 && modelInfo.length > 1 && yearInfo.length == 4) {
-            addInstrument(tyyppiInfo, brandInfo, modelInfo, yearInfo)
+            luoSoitin(tyyppiInfo, brandInfo, modelInfo, yearInfo)
             form.reset();
         }
     })

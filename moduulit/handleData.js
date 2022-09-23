@@ -7,38 +7,38 @@ let instrumentit = {}
 
 // Omat Luokat jokaiselle soitintyypille
 class Kitara {
-    constructor(brand, model, year) {
-    this.brand = brand
-    this.model = model
-    this.year = year
+    constructor(valmistaja, malli, vuosi) {
+    this.valmistaja = valmistaja
+    this.malli = malli
+    this.vuosi = vuosi
     }
 }
 class Basso {
-    constructor(brand, model, year) {
-    this.brand = brand
-    this.model = model
-    this.year = year
+    constructor(valmistaja, malli, vuosi) {
+    this.valmistaja = valmistaja
+    this.malli = malli
+    this.vuosi = vuosi
     }
 }
 class Rummut {
-    constructor(brand, model, year) {
-    this.brand = brand
-    this.model = model
-    this.year = year
+    constructor(valmistaja, malli, vuosi) {
+    this.valmistaja = valmistaja
+    this.malli = malli
+    this.vuosi = vuosi
     }
 }
 
-// Funktio joka tunnistaa instrument-parametrin avulla soitintyypin ja sen perusteella luo Luokka-objektin soittimesta.
+// Funktio joka tunnistaa soitinTyyppi-parametrin avulla soitintyypin ja sen perusteella luo Luokka-objektin soittimesta.
 // Sen jälkeen uusi soitin pushataan omaan listaansa
-function addInstrument(instrument, brand, model, year) {
-    if (instrument === "kitara") {
-        const guitar = new Kitara(brand, model, year)
+function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
+    if (soitinTyyppi === "kitara") {
+        const guitar = new Kitara(valmistaja, malli, vuosi)
         kitarat.push(guitar)
-    } else if (instrument == "basso") {
-        const bass = new Basso(brand, model, year)
+    } else if (soitinTyyppi == "basso") {
+        const bass = new Basso(valmistaja, malli, vuosi)
         bassot.push(bass)
-    } else if (instrument == "rummut") {
-        const drums = new Rummut(brand, model, year)
+    } else if (soitinTyyppi == "rummut") {
+        const drums = new Rummut(valmistaja, malli, vuosi)
         rummut.push(drums)
     }
 
@@ -49,10 +49,9 @@ function addInstrument(instrument, brand, model, year) {
 }
 
 // Kovakoodataan muutama instrumentti
-addInstrument("kitara", "Gibson", "Les Paul", 1952)
-addInstrument("rummut", "Pearl", "En tiedä rummuista mitään", 2018)
-addInstrument("kitara", "Fender", "Stratocaster", 1954)
-addInstrument("basso", "Ibanez", "Hevikeppi", 2012)
+luoSoitin("kitara", "Gibson", "Les Paul", 1952)
+luoSoitin("rummut", "Pearl", "En tiedä rummuista mitään", 2018)
+luoSoitin("kitara", "Fender", "Stratocaster", 1954)
+luoSoitin("basso", "Ibanez", "Hevikeppi", 2012)
 
- 
-export { instrumentit, addInstrument };
+export { instrumentit, luoSoitin };
