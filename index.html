@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS:n Bootstrap-kirjaston käyttöönotto -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Ryhmäprojekti</title>
+</head>
+<body>
+        <!-- NAVIGAATIOPANEELI -->
+        <nav id="top" class="navbar navbar-expand-lg bg-secondary navbar-secondary">
+            <div class="container">
+              <a href="#" class="navbar-brand fw-semibold fs-3">Mahtava Ryhmäprojekti</a>
+      
+              <button
+                class="navbar-toggler"
+                data-bs-toggle="collapse"
+                data-bs-target="#navmenu"
+                type="button"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+      
+              <div class="collapse navbar-collapse text-dark fs-4" id="navmenu">
+                <!-- Tyhjä UL-lista navigointipalkkia varten, joka JS avulla täytetään yksittäisillä Li-elementeillä jotka toimivat yksittäisinä linkkeinä -->
+                <ul id="navBar" class="navbar-nav ms-auto align-items-end">
+                </ul>
+              </div>
+            </div>
+          </nav>
+
+          <!-- PÄÄSISÄLTÖ -->
+        <section class="bg-secondary custom text-dark p-5 text-center text-sm-start p-5 vh-100">
+            <div class="container">
+              <div class="d-lg-flex align-items-center justify-content-between">
+                <!-- id: mainContent on se tyhjä "säiliö" jota kutsutaan muiden sivujen JS-koodissa, ja jonne sitten sijoitetaan tavaraa -->
+                <div id="mainContent" class="m-3">
+                </div>
+              </div>
+            </div>
+          </section>
+    <!-- Ensimmäinen script meidän oma, toka liittyy Bootstrapiin-->
+    <script type="module" src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+</body>
+</html>
