@@ -13,3 +13,5 @@ https://www.w3schools.com/js/js_htmldom_eventlistener.asp
 
 JavaScript moduulit:
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules
+
+Wazaaa!!!
