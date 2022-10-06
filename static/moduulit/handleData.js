@@ -46,6 +46,29 @@ function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
     instrumentit["kitarat"] = kitarat
     instrumentit["bassot"] = bassot
     instrumentit["rummut"] = rummut
+
+
+    // Lähettää instrumentit-arrayn Flaskille
+    fetch("http://127.0.0.1:5000/data", 
+        {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            },
+        // Stringifyllä data muutetaan JSON-muotoon.
+        body:JSON.stringify(instrumentit)}).then(res=>{
+                if(res.ok){
+                    return res.json()
+                }else{
+                    alert("AAAA EI TOIMIIII")
+                }
+            }).then(jsonResponse=>{
+                
+                // Console.logataan data
+                console.log(jsonResponse)
+            } 
+            ).catch((err) => console.error(err));
 }
 
 // Kovakoodataan muutama instrumentti

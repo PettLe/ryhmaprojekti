@@ -5,6 +5,8 @@ function lisaaSoitin() {
     let mainContent = document.getElementById("mainContent")
     mainContent.innerHTML = ""
     let form = document.createElement("form")
+    form.method = "POST"
+    form.action = "data"
     form.classList.add("row")
 
     // Luodaan labelit ja input kentät.
@@ -93,6 +95,8 @@ function lisaaSoitin() {
         let modelInfo = model.value
         let yearInfo = year.value
         
+        //.submit() pitäisi lähettää form-data Flaskille method="POST" kautta. ei toimi.
+        // form.submit()
         if (brandInfo.length > 1 && modelInfo.length > 1 && yearInfo.length == 4) {
             luoSoitin(tyyppiInfo, brandInfo, modelInfo, yearInfo)
             form.reset();
