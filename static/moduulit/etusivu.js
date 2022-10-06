@@ -1,4 +1,4 @@
-import ajastin from "./ajastin.js"
+import {ajastin} from "./ajastin.js"
 
 function etusivu() {
     // Etsitään HTML:stä id:n perusteella mainContent boksi. Tyhjennetään sen innerHTML. (Muuten linkkejä klikatessa kaikki alkaa vain kasautumaan
@@ -29,4 +29,4 @@ function etusivu() {
     mainContent.append(alateksti)
 }
 
-export default etusivu
+export { etusivu }

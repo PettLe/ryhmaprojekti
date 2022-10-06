@@ -1,6 +1,6 @@
-import kaikkiSoittimet from "./kaikkiSoittimet.js"
-import lisaaSoitin from "./lisaaSoitin.js"
-import etusivu from "./etusivu.js"
+import {kaikkiSoittimet} from "./kaikkiSoittimet.js"
+import {lisaaSoitin} from "./lisaaSoitin.js"
+import {etusivu} from "./etusivu.js"
 
 function NavBar() {
     // Etsitään index.html:stä tyhjä UL, luodaan yksitellen Li-muodossa linkit ja lisätään ne sitten UL:ään.
@@ -42,4 +42,4 @@ function NavBar() {
    
 }
 
-export default NavBar
+export { NavBar }

@@ -1,0 +1,11 @@
+<script>  fetch('/data')
+    .then(function (response) {
+        return response.json();
+    }).then(function (text) {
+        console.log('GET response:');
+        console.log(text.greeting); 
+    });</script>
+<body>
+    <h1> Python Fetch Example</h1>
+    <p id='embed'>{{embed}}</p><p id='mylog'/>
+    <body>

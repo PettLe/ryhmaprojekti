@@ -24,4 +24,4 @@ function ajastin() {
     }, 1000);
 }
 
-export default ajastin;
+export {ajastin};

@@ -24,7 +24,13 @@ function kaikkiSoittimet() {
             mainContent.appendChild(p)
         }
     }
-
+    fetch('/data')
+      .then(function (response) {
+          return response.json();
+      }).then(function (text) {
+          console.log('GET response:');
+          console.log(text.greeting); 
+      });
 }
 
-export default kaikkiSoittimet;
+export {kaikkiSoittimet};

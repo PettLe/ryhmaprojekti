@@ -109,4 +109,4 @@ function lisaaSoitin() {
     mainContent.appendChild(form)
 }
 
-export default lisaaSoitin
+export {lisaaSoitin};
