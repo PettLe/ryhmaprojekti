@@ -49,6 +49,16 @@ class Rummut {
     }
 }
 
+const handleDocs = async function (tyyppi, valmistaja, malli, vuosi) {
+    const docRef = await addDoc(collection(db, "soittimet"), {
+      tyyppi: tyyppi,
+      valmistaja: valmistaja,
+      malli: malli,
+      vuosi: vuosi,
+      time: serverTimestamp(),
+    });
+  };
+
 // Funktio joka tunnistaa soitinTyyppi-parametrin avulla soitintyypin ja sen perusteella luo Luokka-objektin soittimesta.
 // Sen jälkeen uusi soitin pushataan omaan listaansa
 function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
@@ -62,7 +72,8 @@ function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
         const drums = new Rummut(valmistaja, malli, vuosi)
         rummut.push(drums)
     }
-
+    
+    handleDocs(soitinTyyppi, valmistaja, malli, vuosi)
     // Instrumentit on dictionary, johon lisätään jokaisen soitintyypin omat listat
     instrumentit["kitarat"] = kitarat
     instrumentit["bassot"] = bassot
@@ -92,20 +103,24 @@ function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
             ).catch((err) => console.error(err));
 }
 
-// Kovakoodataan muutama instrumentti
-luoSoitin("kitara", "Gibson", "Les Paul", 1952)
-luoSoitin("rummut", "Pearl", "En tiedä rummuista mitään", 2018)
-luoSoitin("kitara", "Fender", "Stratocaster", 1954)
-luoSoitin("basso", "Ibanez", "Hevikeppi", 2012)
-
-let test= {}
+// Luetaan tiedot databasesta asynkronisella funktiolla (odotetaan vastausta ennen etenemistä) ja täytetään instrumentit-dictionary niillä
 const querySnapshot = await getDocs(collection(db, "soittimet"));
 querySnapshot.forEach((doc) => {
-  test = {"tyyppi": doc.data()["tyyppi"],
-          "malli": doc.data()["malli"],
-          "valmistaja": doc.data()["valmistaja"],
-          "vuosi": doc.data()["vuosi"]}
+    if (doc.data()["tyyppi"] === "kitara") {
+        const guitar = new Kitara(doc.data()["valmistaja"], doc.data()["malli"], doc.data()["vuosi"])
+        kitarat.push(guitar)
+    } else if (doc.data()["tyyppi"] == "basso") {
+        const bass = new Basso(doc.data()["valmistaja"], doc.data()["malli"], doc.data()["vuosi"])
+        bassot.push(bass)
+    } else if (doc.data()["tyyppi"] == "rummut") {
+        const drums = new Rummut(doc.data()["valmistaja"], doc.data()["malli"], doc.data()["vuosi"])
+        rummut.push(drums)
+    }
+
+
+instrumentit["kitarat"] = kitarat
+instrumentit["bassot"] = bassot
+instrumentit["rummut"] = rummut
         });
 
-luoSoitin(test["tyyppi"], test["valmistaja"], test["malli"], test["vuosi"])
 export { instrumentit, luoSoitin };
