@@ -1,3 +1,24 @@
+// Importataan CDN:n avulla tarvittavia FireBase-toimintoja
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";    
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-analytics.js";
+import { getFirestore, collection, addDoc, serverTimestamp, getDocs } from 'https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js'
+
+// FireStroren asetukset, ei kannata koskea!
+const firebaseConfig = {    
+    apiKey: "AIzaSyDxgiAJie3UUDeaPovBcQhn-IH6ys4mj5c",    
+    authDomain: "roina-6f1bf.firebaseapp.com",    
+    projectId: "roina-6f1bf",    
+    storageBucket: "roina-6f1bf.appspot.com",    
+    messagingSenderId: "531435784591",    
+    appId: "1:531435784591:web:666a7a9e7f86cb78e023fa",    
+    measurementId: "G-FZ9QJM4M9E"    
+  };    
+
+  // Käynnistetään Firebase ja yhdistetään Firestoreen, luodaan muuttuja databaselle  
+  const app = initializeApp(firebaseConfig);  
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app)
+
 // Apulistat (ja dictionary) datan väliaikaseen käsittelyyn
 let kitarat = []
 let bassot = []
@@ -77,4 +98,14 @@ luoSoitin("rummut", "Pearl", "En tiedä rummuista mitään", 2018)
 luoSoitin("kitara", "Fender", "Stratocaster", 1954)
 luoSoitin("basso", "Ibanez", "Hevikeppi", 2012)
 
+let test= {}
+const querySnapshot = await getDocs(collection(db, "soittimet"));
+querySnapshot.forEach((doc) => {
+  test = {"tyyppi": doc.data()["tyyppi"],
+          "malli": doc.data()["malli"],
+          "valmistaja": doc.data()["valmistaja"],
+          "vuosi": doc.data()["vuosi"]}
+        });
+
+luoSoitin(test["tyyppi"], test["valmistaja"], test["malli"], test["vuosi"])
 export { instrumentit, luoSoitin };

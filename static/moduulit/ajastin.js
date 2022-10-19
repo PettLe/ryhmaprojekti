@@ -1,5 +1,5 @@
 function ajastin() {
-    var countDownDate = new Date("Nov 21, 2022 08:00:00").getTime();
+    var countDownDate = new Date("Nov 23, 2022 08:00:00").getTime();
     
     // Päivitetään sekunnin välein
     var x = setInterval(function () {
