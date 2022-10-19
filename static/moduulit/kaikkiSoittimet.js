@@ -19,8 +19,11 @@ function kaikkiSoittimet() {
         // Iteroidaan läpi jokaisen vastaantulevan valuen, tässä tapauksessa ne ovat yksittäisiä soitin dictionaryjä
         for (const index in arvo) {
             let p = document.createElement("p")
+            let delBtn = document.createElement("i")
+            delBtn.classList.add("bi", "bi-x-lg", "delBtn")
             p.classList.add("lead", "fs-5", "fw-semibold", "my-4")
             p.textContent = "\t" + instrumentit[avain][index].valmistaja + " "+ instrumentit[avain][index].malli + ", vuodelta: " + instrumentit[avain][index].vuosi
+            p.appendChild(delBtn)
             mainContent.appendChild(p)
         }
     }
