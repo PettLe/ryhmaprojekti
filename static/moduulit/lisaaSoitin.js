@@ -100,6 +100,7 @@ function lisaaSoitin() {
         if (brandInfo.length > 1 && modelInfo.length > 1 && yearInfo.length == 4) {
             luoSoitin(tyyppiInfo, brandInfo, modelInfo, yearInfo)
             form.reset();
+            // window.location.reload();
         }
     })
 

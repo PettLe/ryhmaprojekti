@@ -1,7 +1,7 @@
 // Importataan CDN:n avulla tarvittavia FireBase-toimintoja
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";    
-import { getFirestore, collection, addDoc, serverTimestamp, getDocs } from 'https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js'
-
+import { getFirestore, collection, doc, addDoc, serverTimestamp, getDocs, deleteDoc } from 'https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js'
+import { kaikkiSoittimet } from "./kaikkiSoittimet.js";
 // FireStroren asetukset, ei kannata koskea!
 const firebaseConfig = {    
     apiKey: "AIzaSyDxgiAJie3UUDeaPovBcQhn-IH6ys4mj5c",    
@@ -30,52 +30,53 @@ function uniqueID() {
 
 // Omat Luokat jokaiselle soitintyypille
 class Kitara {
-    constructor(valmistaja, malli, vuosi, id) {
+    constructor(valmistaja, malli, vuosi, xid) {
     this.valmistaja = valmistaja
     this.malli = malli
     this.vuosi = vuosi
-    this.id = id
+    this.xid = xid
     }
 }
 class Basso {
-    constructor(valmistaja, malli, vuosi, id) {
+    constructor(valmistaja, malli, vuosi, xid) {
     this.valmistaja = valmistaja
     this.malli = malli
     this.vuosi = vuosi
-    this.id = id
+    this.xid = xid
     }
 }
 class Rummut {
-    constructor(valmistaja, malli, vuosi, id) {
+    constructor(valmistaja, malli, vuosi, xid) {
     this.valmistaja = valmistaja
     this.malli = malli
     this.vuosi = vuosi
-    this.id = id
+    this.xid = xid
     }
 }
 
-const handleDocs = async function (tyyppi, valmistaja, malli, vuosi, id) {
+const handleDocs = async function (tyyppi, valmistaja, malli, vuosi, xid) {
     const docRef = await addDoc(collection(db, "soittimet"), {
       tyyppi: tyyppi,
       valmistaja: valmistaja,
       malli: malli,
       vuosi: vuosi,
       time: serverTimestamp(),
-      id: id
+      xid: xid
     });
   };
 
+
 // Funktio joka tunnistaa soitinTyyppi-parametrin avulla soitintyypin ja sen perusteella luo Luokka-objektin soittimesta.
 // Sen jälkeen uusi soitin pushataan omaan listaansa
-function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi, id) {
+function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi, xid) {
     if (soitinTyyppi === "kitara") {
-        const guitar = new Kitara(valmistaja, malli, vuosi, id)
+        const guitar = new Kitara(valmistaja, malli, vuosi, xid)
         kitarat.push(guitar)
     } else if (soitinTyyppi == "basso") {
-        const bass = new Basso(valmistaja, malli, vuosi, id)
+        const bass = new Basso(valmistaja, malli, vuosi, xid)
         bassot.push(bass)
     } else if (soitinTyyppi == "rummut") {
-        const drums = new Rummut(valmistaja, malli, vuosi, id)
+        const drums = new Rummut(valmistaja, malli, vuosi, xid)
         rummut.push(drums)
     }
     
@@ -110,24 +111,55 @@ function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi, id) {
             ).catch((err) => console.error(err));
 }
 
+async function poistaSoitin(event) {
+    let uid = event.srcElement.id
+    let poistettava
+        for(let avain in instrumentit){
+           let obj = instrumentit[avain];
+           for (let soitin in obj) {
+            if (obj[soitin].xid == uid) {
+
+                let tiedot = await getDocs(collection(db, "soittimet"));
+                tiedot.forEach((doc) => {
+                    if (doc.data().xid == uid) {
+                    poistettava = doc.id
+                }
+            });
+                const docRef = doc(db, "soittimet", poistettava);
+                deleteDoc(docRef);
+                instrumentit[avain] = obj.filter(function(el) { return el.xid != uid; });
+                console.log(instrumentit)
+                break;
+            }
+           }
+           }  
+           let mainContent = document.getElementById("mainContent")
+           mainContent.innerHTML = ""
+        //    instrumentit = {}
+        //    taytaInstrumentit()
+           kaikkiSoittimet()
+}
+
 // Luetaan tiedot databasesta asynkronisella funktiolla (odotetaan vastausta ennen etenemistä) ja täytetään instrumentit-dictionary niillä
+async function taytaInstrumentit() {
+    // instrumentit = {}
 const querySnapshot = await getDocs(collection(db, "soittimet"));
 querySnapshot.forEach((doc) => {
     if (doc.data()["tyyppi"] === "kitara") {
-        const guitar = new Kitara(doc.data()["valmistaja"], doc.data()["malli"], doc.data()["vuosi"], doc.data()["id"])
+        const guitar = new Kitara(doc.data()["valmistaja"], doc.data()["malli"], doc.data()["vuosi"], doc.data()["xid"])
         kitarat.push(guitar)
     } else if (doc.data()["tyyppi"] == "basso") {
-        const bass = new Basso(doc.data()["valmistaja"], doc.data()["malli"], doc.data()["vuosi"], doc.data()["id"])
+        const bass = new Basso(doc.data()["valmistaja"], doc.data()["malli"], doc.data()["vuosi"], doc.data()["xid"])
         bassot.push(bass)
     } else if (doc.data()["tyyppi"] == "rummut") {
-        const drums = new Rummut(doc.data()["valmistaja"], doc.data()["malli"], doc.data()["vuosi"], doc.data()["id"])
+        const drums = new Rummut(doc.data()["valmistaja"], doc.data()["malli"], doc.data()["vuosi"], doc.data()["xid"])
         rummut.push(drums)
     }
-
 
 instrumentit["kitarat"] = kitarat
 instrumentit["bassot"] = bassot
 instrumentit["rummut"] = rummut
-        });
+        });}
+    taytaInstrumentit()
 
-export { instrumentit, luoSoitin };
+export { instrumentit, luoSoitin, poistaSoitin };

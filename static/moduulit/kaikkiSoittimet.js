@@ -1,4 +1,4 @@
-import {instrumentit} from "./handleData.js"
+import {instrumentit, poistaSoitin} from "./handleData.js"
 
 function kaikkiSoittimet() {
     // Etsitään HTML:stä id:n perusteella mainContent boksi. Tyhjennetään sen innerHTML.
@@ -20,7 +20,11 @@ function kaikkiSoittimet() {
         for (const index in arvo) {
             let p = document.createElement("p")
             let delBtn = document.createElement("i")
+            delBtn.id = instrumentit[avain][index].xid
             delBtn.classList.add("bi", "bi-x-lg", "delBtn")
+            delBtn.addEventListener("click", (event) => { 
+                poistaSoitin(event)
+            })
             p.classList.add("lead", "fs-5", "fw-semibold", "my-4")
             p.textContent = "\t" + instrumentit[avain][index].valmistaja + " "+ instrumentit[avain][index].malli + ", vuodelta: " + instrumentit[avain][index].vuosi
             p.appendChild(delBtn)
