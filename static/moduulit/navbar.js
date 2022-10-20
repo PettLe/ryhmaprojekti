@@ -29,7 +29,6 @@ function NavBar() {
         link3.textContent = "Hae soitinta"
         navbar.appendChild(link3)
         link3.addEventListener("click", () => {
-            // window.location.reload().then(kaikkiSoittimet());
             kaikkiSoittimet()
         })
 

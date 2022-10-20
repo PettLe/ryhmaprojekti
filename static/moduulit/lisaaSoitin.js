@@ -1,4 +1,4 @@
-import {luoSoitin} from "./handleData.js"
+import {instrumentit, luoSoitin} from "./handleData.js"
 
 function lisaaSoitin() {
     // Etsitään HTML:stä id:n perusteella mainContent boksi. Tyhjennetään sen innerHTML. Luodaan Form mukamas helpottamaan elämää. (Spoiler alert, ei helpottanut.)
@@ -100,7 +100,7 @@ function lisaaSoitin() {
         if (brandInfo.length > 1 && modelInfo.length > 1 && yearInfo.length == 4) {
             luoSoitin(tyyppiInfo, brandInfo, modelInfo, yearInfo)
             form.reset();
-            // window.location.reload();
+            console.log(instrumentit)
         }
     })
 

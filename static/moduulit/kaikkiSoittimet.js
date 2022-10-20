@@ -31,7 +31,6 @@ function kaikkiSoittimet() {
             mainContent.appendChild(p)
         }
     }
-
 }
 
 export {kaikkiSoittimet};

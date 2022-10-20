@@ -2,6 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.12.1/firebase-app.js";    
 import { getFirestore, collection, doc, addDoc, serverTimestamp, getDocs, deleteDoc } from 'https://www.gstatic.com/firebasejs/9.12.1/firebase-firestore.js'
 import { kaikkiSoittimet } from "./kaikkiSoittimet.js";
+
 // FireStroren asetukset, ei kannata koskea!
 const firebaseConfig = {    
     apiKey: "AIzaSyDxgiAJie3UUDeaPovBcQhn-IH6ys4mj5c",    
@@ -54,6 +55,7 @@ class Rummut {
     }
 }
 
+// funktio, joka kutsuu firestore databasea ja sen jälkeen lisää sinne soittimen.
 const handleDocs = async function (tyyppi, valmistaja, malli, vuosi, xid) {
     const docRef = await addDoc(collection(db, "soittimet"), {
       tyyppi: tyyppi,
@@ -69,56 +71,48 @@ const handleDocs = async function (tyyppi, valmistaja, malli, vuosi, xid) {
 // Funktio joka tunnistaa soitinTyyppi-parametrin avulla soitintyypin ja sen perusteella luo Luokka-objektin soittimesta.
 // Sen jälkeen uusi soitin pushataan omaan listaansa
 function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi, xid) {
-    if (soitinTyyppi === "kitara") {
-        const guitar = new Kitara(valmistaja, malli, vuosi, xid)
-        kitarat.push(guitar)
-    } else if (soitinTyyppi == "basso") {
-        const bass = new Basso(valmistaja, malli, vuosi, xid)
-        bassot.push(bass)
-    } else if (soitinTyyppi == "rummut") {
-        const drums = new Rummut(valmistaja, malli, vuosi, xid)
-        rummut.push(drums)
-    }
-    
-    handleDocs(soitinTyyppi, valmistaja, malli, vuosi, uniqueID())
+// kun uusi soitin luodaan muualla, kutsutaan yllä luotua funktiota joka lähettää tiedot databaseen
+   handleDocs(soitinTyyppi, valmistaja, malli, vuosi, uniqueID())
 
-    // Instrumentit on dictionary, johon lisätään jokaisen soitintyypin omat listat
-    instrumentit["kitarat"] = kitarat
-    instrumentit["bassot"] = bassot
-    instrumentit["rummut"] = rummut
+// sen jälkeen kutsutaan funktiota, joka hakee ajantasaiset tiedot databasesta ja täyttää sovelluksen omassa käytössä 
+// olevan instrumentit-dictionaryn niillä
+    taytaInstrumentit()
 
-
-    // Lähettää instrumentit-arrayn Flaskille
+            
+    // Lähettää instrumentit-arrayn Flaskille ja Pythonin käytettäväksi
     fetch("http://127.0.0.1:5000/data", 
-        {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-                'Accept': 'application/json'
-            },
-        // Stringifyllä data muutetaan JSON-muotoon.
-        body:JSON.stringify(instrumentit)}).then(res=>{
-                if(res.ok){
-                    return res.json()
-                }else{
-                    alert("AAAA EI TOIMIIII")
-                }
-            }).then(jsonResponse=>{
-                
-                // Console.logataan data
-                console.log(jsonResponse)
-            } 
-            ).catch((err) => console.error(err));
+    {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+        },
+    // Stringifyllä data muutetaan JSON-muotoon.
+    body:JSON.stringify(instrumentit)}).then(res=>{
+            if(res.ok){
+                return res.json()
+            }else{
+                alert("AAAA EI TOIMIIII")
+            }
+        }).then(jsonResponse=>{
+            
+            // Console.logataan data
+            console.log(jsonResponse)
+        } 
+        ).catch((err) => console.error(err));
 }
 
+// Funktio yksittäisen soittimen poistoa varten
 async function poistaSoitin(event) {
+// Kun soittimet renderöidään kaikkiSoittimet-tiedostossa, samalla jokaisen poistonapin ID:ksi määritellään kyseisen instrumentin yksilöllinen ID.
+// Alla oleva muuttuja saa arvokseen klikkaus-eventin tapahtuessa klikatun elementin (eli poistonappulan) ID:n.
     let uid = event.srcElement.id
     let poistettava
+// Seuraavaksi selaamme läpi instrumentit dictionaryn että databasen. Jos aiemmin löydetylle ID:lle löydetään match, löydetty soitin poistetaan. 
         for(let avain in instrumentit){
            let obj = instrumentit[avain];
            for (let soitin in obj) {
             if (obj[soitin].xid == uid) {
-
                 let tiedot = await getDocs(collection(db, "soittimet"));
                 tiedot.forEach((doc) => {
                     if (doc.data().xid == uid) {
@@ -130,20 +124,24 @@ async function poistaSoitin(event) {
                 instrumentit[avain] = obj.filter(function(el) { return el.xid != uid; });
                 console.log(instrumentit)
                 break;
-            }
-           }
-           }  
+            }}}  
            let mainContent = document.getElementById("mainContent")
            mainContent.innerHTML = ""
-        //    instrumentit = {}
-        //    taytaInstrumentit()
            kaikkiSoittimet()
 }
 
-// Luetaan tiedot databasesta asynkronisella funktiolla (odotetaan vastausta ennen etenemistä) ja täytetään instrumentit-dictionary niillä
+// Luetaan tiedot databasesta asynkronisella funktiolla (=> eli odotetaan vastausta ennen etenemistä) ja täytetään instrumentit-dictionary niillä
 async function taytaInstrumentit() {
-    // instrumentit = {}
+// tyhjennetään yksittäiset soitinlistat aina funktiota kutsuttaessa, jottei samat soittimet esiinny useasti
+    kitarat = []
+    bassot = []
+    rummut = []
+
+// querySnapshot hakee haluamamme databasen, jonka jälkeen voimme loopata läpi jokaisen sieltä löytyneen objektin
 const querySnapshot = await getDocs(collection(db, "soittimet"));
+
+// jokaisen objektin kohdalla tarkistamme onko kyseessä mikä soitin, ja sen perusteella luomme Class-objektin siitä ja laitamme omaan
+// soitintyypille varattuun arrayhin.
 querySnapshot.forEach((doc) => {
     if (doc.data()["tyyppi"] === "kitara") {
         const guitar = new Kitara(doc.data()["valmistaja"], doc.data()["malli"], doc.data()["vuosi"], doc.data()["xid"])
@@ -156,10 +154,20 @@ querySnapshot.forEach((doc) => {
         rummut.push(drums)
     }
 
+// Nyt täytämme instrumentit-dictionaryn jokaisen soitintyypin arraylla.
 instrumentit["kitarat"] = kitarat
 instrumentit["bassot"] = bassot
 instrumentit["rummut"] = rummut
         });}
-    taytaInstrumentit()
 
-export { instrumentit, luoSoitin, poistaSoitin };
+taytaInstrumentit()
+
+export { instrumentit, luoSoitin, poistaSoitin, taytaInstrumentit };
+
+// Huom., valmis instrumentti array on muodoltaan kutakuinkin tällainen:
+// instrumentit = {
+//          "kitarat": [{"valmistaja": "gibson", "malli": "les paul"}, {"valmistaja": "fender", "malli": "telecaster"}] (<-- lista, jonka sisällä objekteja) 
+//              },
+//              {
+//              "bassot": [{"valmistaja": "ibanez", "malli": "jöhrmungad"}]    
+//                      }, jne.
