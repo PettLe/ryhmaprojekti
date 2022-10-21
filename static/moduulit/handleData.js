@@ -164,7 +164,7 @@ taytaInstrumentit()
 
 export { instrumentit, luoSoitin, poistaSoitin, taytaInstrumentit };
 
-// Huom., valmis instrumentti array on muodoltaan kutakuinkin tällainen:
+// Huom., valmis instrumentti dictionary on muodoltaan kutakuinkin tällainen:
 // instrumentit = {
 //          "kitarat": [{"valmistaja": "gibson", "malli": "les paul"}, {"valmistaja": "fender", "malli": "telecaster"}] (<-- lista, jonka sisällä objekteja) 
 //              },
