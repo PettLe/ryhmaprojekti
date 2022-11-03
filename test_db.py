@@ -1,39 +1,60 @@
 import mysql.connector
 
+# # Batabase yhteyden muodostus listana
+# config = {
+# 	'host': "localhost",
+# 	'user': "root",
+# 	'password': "",
+# 	'database': "db_project" # Uusi database nimi 
+# }
+# conn_db = mysql.connector.connect(**config)
+
+# cursor = conn_db.cursor()
+
+# conn_db.commit()
+
 conn = mysql.connector.connect( # Database yhteyden muodostus
 	host = "localhost",
 	user = "root",
-	password = "",
+	password = "deathbase",
 	database = "projectbase"
 )
-
 # print(conn) # Testaus toimiiko yhteys
+# print("Toimii")
+mycursor = conn.cursor()
 
-cursor = conn.cursor()
+	# batabasen luominen mysql
+# mycursor.execute("CREATE DATABASE IF NOT EXISTS projectbase")
 
-cursor.execute("CREATE DATABASE IF NOT EXISTS projectbase")
-
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS person (
-person_id INT AUTO_INCREMENT PRIMARY KEY,
-first_name VARCHAR(64),
-last_name VARCHAR(64),
-email VARCHAR(64)
+	# tämä luo taulun(table) tietokantaan
+mycursor.execute("""
+CREATE TABLE IF NOT EXISTS own (
+ad_id INT AUTO_INCREMENT PRIMARY KEY,
+title VARCHAR(64),
+ad_content VARCHAR(200)
 );
 """)
 
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS instrument (
-instrument_id INT AUTO_INCREMENT PRIMARY KEY,
-guitars VARCHAR(64),
-bassguitars VARCHAR(64),
-drums VARCHAR(64)
-);
-""")
+# mycursor.execute("""
+# CREATE TABLE IF NOT EXISTS instrument (
+# instrument_id INT AUTO_INCREMENT PRIMARY KEY,
+# guitars VARCHAR(64),
+# bassguitars VARCHAR(64),
+# drums VARCHAR(64)
+# );
+# """)
 
-cursor.execute("SHOW TABLES")
+# mycursor.execute("SHOW TABLES")
 
-for table in cursor:
-	print(table)
+# # for table in mycursor:
+# # 	print(table)
 
+# sql = "INSERT INTO person (id, first_name, last_name, email) VALUES (%d, %s, %s, %s)"
+# val = (8, "Muumi", "Keskinen", "axel.keskinen@email.com")
+# mycursor.execute(sql, val)
+
+# conn.commit()
+
+# print(mycursor.rowcount, "record inserted.")
 conn.commit()
+conn.close()
