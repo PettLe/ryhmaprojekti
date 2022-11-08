@@ -1,31 +1,31 @@
 import mysql.connector
 
 # # Tietokannan yhteyden muodostus dictionarina
-config = {
-	'host': "localhost",
-	'user': "root",
-	'password': "deathbase",
-	'database': "projectbase" # Uusi database nimi 
-}
-conn_db = mysql.connector.connect(**config)
+# config = {
+# 	'host': "localhost",
+# 	'user': "root",
+# 	'password': "deathbase",
+# 	'database': "projectbase" # Uusi database nimi 
+# }
+# conn_db = mysql.connector.connect(**config)
 
-cursor = conn_db.cursor()
+# cursor = conn_db.cursor()
 
 #	***************************** testailuja ja käytännön kokeiluja **************************
 
 # conn_db.commit()
 
-# conn = mysql.connector.connect( # Database yhteyden muodostus
-# 	host = "localhost",
-# 	user = "root",
-# 	password = "deathbase",
-# 	database = "projectbase"
-# )
+conn_db = mysql.connector.connect( # Database yhteyden muodostus
+	host = "localhost",
+	user = "root",
+	password = "deathbase",
+	database = "projectbase"
+)
 # print(conn) # Testaus toimiiko yhteys
 # print("Toimii")
-# mycursor = conn.cursor()
+cursor = conn_db.cursor()
 
-	# batabasen luominen mysql:ään
+# 	# batabasen luominen mysql:ään
 # mycursor.execute("CREATE DATABASE IF NOT EXISTS projectbase")
 
 	# tämä luo taulun(table) tietokantaan

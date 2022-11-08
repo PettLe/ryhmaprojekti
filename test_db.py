@@ -23,13 +23,14 @@ conn = mysql.connector.connect( # Database yhteyden muodostus
 # print("Toimii")
 mycursor = conn.cursor()
 
-	# batabasen luominen mysql
+	# batabasen luominen mysql:ään
 # mycursor.execute("CREATE DATABASE IF NOT EXISTS projectbase")
 
 	# tämä luo taulun(table) tietokantaan
 mycursor.execute("""
 CREATE TABLE IF NOT EXISTS own (
-ad_id INT AUTO_INCREMENT PRIMARY KEY,
+id INT AUTO_INCREMENT PRIMARY KEY,
+ad VARCHAR(64),
 title VARCHAR(64),
 ad_content VARCHAR(200)
 );

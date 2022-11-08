@@ -6,7 +6,8 @@ from project_database import cursor
 DB_NAME = "projectbase"
 
 TABLES = {}
-
+ #	tämän taulun(table) tein esim. kirjautumisia varten
+ #	eli ei meillä vielä käytössä
 TABLES['users'] = (
 	"CREATE TABLE `users` ("
 	" `id` INT NOT NULL AUTO_INCREMENT,"
@@ -17,6 +18,7 @@ TABLES['users'] = (
 	" PRIMARY KEY (`id`)"
 	") ENGINE=InnoDB"
 )
+ #	 Tämä taulu(table) on iltoituksille, mitä nyt käytetään.
 TABLES['own'] = (
 	"CREATE TABLE `own` ("
 	" `id` INT NOT NULL AUTO_INCREMENT,"
@@ -26,14 +28,14 @@ TABLES['own'] = (
 	") ENGINE=InnoDB"
 )
 
-def create_database():
+def create_database():	# tietokannan luomista varten
 	cursor.execute("CREATE DATABASE IF NOT EXISTS {}".format(DB_NAME))
 	print("tietokanta {} luotu!".format(DB_NAME))
 
-def create_tables():
+def create_tables():	# taulujen(table) luomista varten
 	cursor.execute("USE {}".format(DB_NAME))
-	
-	for table_name in TABLES:
+	# käydään taulut läpi ja luodaan taulu jos ei ole
+	for table_name in TABLES: 
 		table_description = TABLES[table_name]
 		try:
 			print("Luotiin taulu ({}) ".format(table_name), end="")

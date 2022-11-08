@@ -30,16 +30,17 @@ class Rummut {
 
 // Funktio joka tunnistaa soitinTyyppi-parametrin avulla soitintyypin ja sen perusteella luo Luokka-objektin soittimesta.
 // Sen jälkeen uusi soitin pushataan omaan listaansa
-function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
+function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) { 
+	let soitin;
     if (soitinTyyppi === "kitara") {
-        const guitar = new Kitara(valmistaja, malli, vuosi)
-        kitarat.push(guitar)
+        soitin = new Kitara(valmistaja, malli, vuosi)
+        // kitarat.push(guitar)
     } else if (soitinTyyppi == "basso") {
-        const bass = new Basso(valmistaja, malli, vuosi)
-        bassot.push(bass)
+        soitin = new Basso(valmistaja, malli, vuosi)
+        // bassot.push(bass)
     } else if (soitinTyyppi == "rummut") {
-        const drums = new Rummut(valmistaja, malli, vuosi)
-        rummut.push(drums)
+        soitin = new Rummut(valmistaja, malli, vuosi)
+        // rummut.push(drums)
     }
 
     // Instrumentit on dictionary, johon lisätään jokaisen soitintyypin omat listat
@@ -57,7 +58,7 @@ function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
                 'Accept': 'application/json'
             },
         // Stringifyllä data muutetaan JSON-muotoon.
-        body:JSON.stringify(instrumentit)}).then(res=>{
+        body:JSON.stringify(soitin)}).then(res=>{
                 if(res.ok){
                     return res.json()
                 }else{
@@ -72,9 +73,9 @@ function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
 }
 
 // Kovakoodataan muutama instrumentti
-luoSoitin("kitara", "Gibson", "Les Paul", 1952)
-luoSoitin("rummut", "Pearl", "En tiedä rummuista mitään", 2018)
-luoSoitin("kitara", "Fender", "Stratocaster", 1954)
-luoSoitin("basso", "Ibanez", "Hevikeppi", 2012)
+// luoSoitin("kitara", "Gibson", "Les Paul", 1952)
+// luoSoitin("rummut", "Pearl", "En tiedä rummuista mitään", 2018)
+// luoSoitin("kitara", "Fender", "Stratocaster", 1954)
+// luoSoitin("basso", "Ibanez", "Hevikeppi", 2012)
 
 export { instrumentit, luoSoitin };
