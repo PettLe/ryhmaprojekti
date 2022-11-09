@@ -21,9 +21,11 @@ conn_db = mysql.connector.connect( # Database yhteyden muodostus
 	password = "deathbase",
 	database = "projectbase"
 )
-# print(conn) # Testaus toimiiko yhteys
-# print("Toimii")
+# conn_db.close()
+# print(conn_db) # Testaus toimiiko yhteys
+# conn_db = mysql.connector.connect()
 cursor = conn_db.cursor()
+# print(cursor)
 
 # 	# batabasen luominen mysql:ään
 # mycursor.execute("CREATE DATABASE IF NOT EXISTS projectbase")
