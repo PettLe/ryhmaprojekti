@@ -1,9 +1,8 @@
 import mysql.connector
 from project_database import conn_db, cursor
-# from flask import MySQL
 from flask import Flask, render_template, request, jsonify
-from flask_mysqldb import MySQL, MySQLdb
-import MySQLdb
+from flask_mysqldb import MySQL
+# from main import add_instrument
 # from flask_sqlalchemy import SQLAlchemy
 # from datetime import datetime
 app = Flask(__name__)
@@ -31,21 +30,26 @@ def home_page():
 def datankasittely():
 # conn_db = mysql.connector("project_database")
 	if request.method == 'GET':     # GET request
-		message = {'greeting':'Hello from Flask!'}
-		return jsonify(message)     # serialize and use JSON headers
+		cursor = mysql.connection.cursor()
+		sql = "SELECT * FROM own"
+		cursor.execute(sql)
+		result = cursor.fetchall()
 
-	if request.method == 'POST':
-		# conn_db = mysql.connector()
-		cursor = mysql.connection.cursor()    # POST request
-		sql = "INSERT INTO own (ad, title, ad_content) VALUES (%s, %s, %s)"
-		result = request.get_json()
-		result2 = (result["valmistaja"],result["malli"], result["vuosi"])
-		cursor.execute(sql, result2)
-		mysql.connection.commit()
-		cursor.close()
-		print(result2)
+		print(result)
+		return result     # serialize and use JSON headers
+
+	if request.method == 'POST':	 # POST request
+		cursor = mysql.connection.cursor()   # luo yhteyden db:n
+		sql = "INSERT INTO own (ad, title, ad_content) VALUES (%s, %s, %s)" # luodaan tableliin uusi soitin 
+		result = request.get_json()	# saadaan frontista json tiedostona
+		result2 = (result["valmistaja"],result["malli"], result["vuosi"])	# muotoillaan json tiedosto ymmärrettävään muotoon
+		cursor.execute(sql, result2)	 # suoritetaan käsky db:n
+		mysql.connection.commit()	# suoritetaan muutos
+		cursor.close()	# suljetaan yhteys
+		print(result2)	
 		return result
         # return 'Sucesss', 200
+		# add_instrument(result2)
 
 if __name__=="__main__":
 	app.run(debug=True)

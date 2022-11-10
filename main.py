@@ -1,12 +1,21 @@
+import mysql.connector
 from project_database import cursor, conn_db
+from flask import request
+from flask_mysqldb import MySQL
 
-def add_instrument(id, ad, title, ad_content):
+def add_instrument(ad, title, ad_content):
+	# cursor = mysql.connection.cursor()
 	sql = ("INSERT INTO own(ad, title, ad_content) VALUES (%s, %s, %s)")
-	cursor.execute(sql,(ad, title, ad_content,))
-	conn_db.commit()
-	instrument_id = cursor.lastrowid
-	print("lisätty logi {}".format(instrument_id))
-	
+	result = request.get_json()
+	result2 = (result["valmistaja"],result["malli"], result["vuosi"])
+	# cursor.execute(sql,(ad, title, ad_content,))
+	cursor.execute(sql, result2)
+	# conn_db.commit()
+	mysql.connection.commit()
+	# instrument_id = cursor.lastrowid
+	print(result2)
+	return result
+
 def get_all_instruments():
 	sql = ("SELECT * FROM own")
 	cursor.execute(sql)

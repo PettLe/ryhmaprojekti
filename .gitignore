@@ -1,2 +1,3 @@
 env/
 project_db.py
+__pycache__
