@@ -1,5 +1,6 @@
 import mysql.connector
 
+
 # # Tietokannan yhteyden muodostus dictionarina
 # config = {
 # 	'host': "localhost",
@@ -21,10 +22,10 @@ conn_db = mysql.connector.connect( # Database yhteyden muodostus
 	password = "deathbase",
 	database = "projectbase"
 )
+cursor = conn_db.cursor()
 # conn_db.close()
 # print(conn_db) # Testaus toimiiko yhteys
 # conn_db = mysql.connector.connect()
-cursor = conn_db.cursor()
 # print(cursor)
 
 # 	# batabasen luominen mysql:ään

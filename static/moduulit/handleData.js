@@ -17,8 +17,8 @@ class Basso {
     constructor(valmistaja, malli, vuosi) {
     this.valmistaja = valmistaja
     this.malli = malli
-    this.vuosi = vuosi
-    }
+	this.vuosi = vuosi
+}
 }
 class Rummut {
     constructor(valmistaja, malli, vuosi) {
@@ -70,28 +70,28 @@ function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
                 console.log(jsonResponse)
             } 
             ).catch((err) => console.error(err));
-
-	// fetch("http://127.0.0.1:5000/data", 
-    //     {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-type': 'application/json',
-    //             'Accept': 'application/json'
-    //         },
-    //     // Stringifyllä data muutetaan JSON-muotoon.
-    //     body:JSON.stringify(soitin)}).then(res=>{
-    //             if(res.ok){
-    //                 return res.json()
-    //             }else{
-    //                 alert("AAAA EI TOIMIIII")
-    //             }
-    //         }).then(jsonResponse=>{
+		}
+// 	fetch("http://127.0.0.1:5000/read", 
+//         {
+//             method: 'GET',
+//             headers: {
+//                 'Content-type': 'application/json',
+//                 'Accept': 'application/json'
+//             },
+//         // Stringifyllä data muutetaan JSON-muotoon.
+//         body:JSON.stringify(soitin)}).then(res=>{
+//                 if(res.ok){
+//                     return res.json()
+//                 }else{
+//                     alert("AAAA EI TOIMIIII")
+//                 }
+//             }).then(jsonResponse=>{
                 
-    //             // Console.logataan data
-    //             console.log(jsonResponse)
-    //         } 
-    //         ).catch((err) => console.error(err));
-}
+//                 // Console.logataan data
+//                 console.log(jsonResponse)
+//             } 
+//             ).catch((err) => console.error(err));
+// }
 // Kovakoodataan muutama instrumentti
 // luoSoitin("kitara", "Gibson", "Les Paul", 1952)
 // luoSoitin("rummut", "Pearl", "En tiedä rummuista mitään", 2018)

@@ -1,20 +1,21 @@
 import mysql.connector
-from project_database import cursor, conn_db
+from project_database import cursor,conn_db
 from flask import request
-from flask_mysqldb import MySQL
+# from flask_mysqldb import MySQL
 
 def add_instrument(ad, title, ad_content):
 	# cursor = mysql.connection.cursor()
 	sql = ("INSERT INTO own(ad, title, ad_content) VALUES (%s, %s, %s)")
-	result = request.get_json()
-	result2 = (result["valmistaja"],result["malli"], result["vuosi"])
-	# cursor.execute(sql,(ad, title, ad_content,))
-	cursor.execute(sql, result2)
+	# result = request.get_json()
+	# result2 = (result["valmistaja"],result["malli"], result["vuosi"])
+	cursor.execute(sql,(ad, title, ad_content,))
+	# cursor.execute(sql, result2)
 	# conn_db.commit()
-	mysql.connection.commit()
+	# mysql.connection.commit()
+	# cursor.close()
 	# instrument_id = cursor.lastrowid
-	print(result2)
-	return result
+	# print()
+	return cursor
 
 def get_all_instruments():
 	sql = ("SELECT * FROM own")
