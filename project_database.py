@@ -1,14 +1,14 @@
 import mysql.connector
 
 
-# # Tietokannan yhteyden muodostus dictionarina
-# config = {
-# 	'host': "localhost",
-# 	'user': "root",
-# 	'password': "deathbase",
-# 	'database': "projectbase" # Uusi database nimi 
-# }
-# conn_db = mysql.connector.connect(**config)
+# Tietokannan yhteyden muodostus dictionarina
+config = {
+	'host': "localhost",
+	'user': "root",
+	'password': "deathbase",
+	'database': "projectbase" # Uusi database nimi 
+}
+conn_db = mysql.connector.connect(**config)
 
 # cursor = conn_db.cursor()
 
@@ -16,23 +16,23 @@ import mysql.connector
 
 # conn_db.commit()
 
-conn_db = mysql.connector.connect( # Database yhteyden muodostus
-	host = "localhost",
-	user = "root",
-	password = "deathbase",
-	database = "projectbase"
-)
-cursor = conn_db.cursor()
+# conn_db = mysql.connector.connect( # Database yhteyden muodostus
+# 	MYSQL_HOST = "localhost",
+# 	MYSQL_USER = "root",
+# 	MYSQL_PASSWORD = "deathbase",
+# 	MYSQL_DB = "projectbase"
+# )
+# cursor = conn_db.cursor()
 # conn_db.close()
 # print(conn_db) # Testaus toimiiko yhteys
 # conn_db = mysql.connector.connect()
 # print(cursor)
 
-# 	# batabasen luominen mysql:ään
-# mycursor.execute("CREATE DATABASE IF NOT EXISTS projectbase")
+	# batabasen luominen mysql:ään
+# cursor.execute("CREATE DATABASE IF NOT EXISTS projectbase")
 
 	# tämä luo taulun(table) tietokantaan
-# mycursor.execute("""
+# cursor.execute("""
 # CREATE TABLE IF NOT EXISTS own (
 # id INT AUTO_INCREMENT PRIMARY KEY,
 # ad VARCHAR(64),
@@ -41,7 +41,7 @@ cursor = conn_db.cursor()
 # );
 # """)
 
-# mycursor.execute("""
+# cursor.execute("""
 # CREATE TABLE IF NOT EXISTS instrument (
 # instrument_id INT AUTO_INCREMENT PRIMARY KEY,
 # guitars VARCHAR(64),

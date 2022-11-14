@@ -2,7 +2,7 @@ import mysql.connector
 from flask import Flask, render_template, request, jsonify
 # from project_database import cursor
 from flask_mysqldb import MySQL
-from project_database import cursor,cursor
+from project_database import conn_db,config
 # from main import add_instrument
 # from flask_sqlalchemy import SQLAlchemy
 # from datetime import datetime
@@ -12,12 +12,12 @@ app = Flask(__name__)
 # app.config['MYSQL_DATABASE_URL'] = 'mysql://username:password@localhost/projectbase'
 # app.config['MYSQL_DATABASE_URL'] = 'mysql://root:deathbase@localhost/own'
 # conn_db = mysql.connector.connect(host = "localhost", user = "root",passwd = "deathbase",database = "projectbase")
-# cursor = conn_db.cursor()
+cursor = conn_db.cursor()
 
-app.config['MYSQL_HOST'] = "localhost"
-app.config['MYSQL_USER'] = "root"
-app.config['MYSQL_PASSWORD'] = "deathbase"
-app.config['MYSQL_DB'] = "projectbase"
+app.config['MYSQL_HOST'] = config["host"]
+app.config['MYSQL_USER'] = config["user"]
+app.config['MYSQL_PASSWORD'] = config["password"]
+app.config['MYSQL_DB'] = config["database"]
 # app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 # cursor = mysql.connector()
 
@@ -54,15 +54,15 @@ def luo_soitin():
         # return 'Sucesss', 200
 		# add_instrument(result2)
 
-# @app.route('/data', methods=['GET', 'POST'])
-# def tulosta_soittimet(id):
-# 	if request.method =='POST':
-# 		sql = ("SELECT * FROM own ")
-# 		cursor.execute(sql, (id,))
-# 		result = cursor.fetchall()
+@app.route('/read', methods=['GET', 'POST'])
+def tulosta_soittimet(id):
+	if request.method =='POST':
+		sql = ("SELECT * FROM own ")
+		cursor.execute(sql, (id,))
+		result = cursor.fetchall()
 
-# 		for row in result:
-# 			print(row)
+		for row in result:
+			print(row)
 
 
 if __name__=="__main__":
