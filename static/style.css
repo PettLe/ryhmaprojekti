@@ -5,3 +5,12 @@
 p {
     white-space: pre;
 }
+
+.delBtn {
+    margin-left: 10px;
+}
+
+.delBtn:hover {
+    cursor: pointer;
+    color: red;    
+}

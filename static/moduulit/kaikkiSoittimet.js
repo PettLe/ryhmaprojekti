@@ -1,5 +1,3 @@
-import {instrumentit, uniqueID} from "./handleData.js"
-
 async function kaikkiSoittimet() {
     // Noudetaan fetch()-funktiolla mySQL-data Flaskiltä. Awaitillä odotetaan vastausta ja datan latautumista ennen kuin jatketaan eteenpäin
     let response = await fetch('/testi')
@@ -14,19 +12,6 @@ async function kaikkiSoittimet() {
     h2.textContent = "Tietokannasta löytyvät soittimet:"
     mainContent.appendChild(h2)
 
-    // Väliaikainen yksinkertaisempi renderöinti
-        //     // Tehdään jokaisesta avaimesta otsikko sivulle
-    // let h4 = document.createElement("h4")
-    // h4.classList.add("fs-3")
-    // h4.textContent = avain + ":"
-    // mainContent.appendChild(h4)
-    // for (let i = 0; i < data['kitarat'].length; i++) {
-    //     let p = document.createElement("p")
-    //     p.classList.add("lead", "fs-5", "fw-semibold", "my-4")
-    //     p.textContent = "\t" + data["kitarat"][i].malli + " " + data["kitarat"][i].valmistaja + ", vuodelta " + data["kitarat"][i].vuosi
-    //     mainContent.appendChild(p)
-    // }
-
     // Iteroidaan läpi instrumentit-dictionaryn hakien sieltä avain-arvo -parit. Tässä tapauksessa arvo on uusi dictionary yksittäisestä soittimesta
     for (const [avain, arvo] of Object.entries(data)) {
         // Tehdään jokaisesta avaimesta otsikko sivulle
@@ -38,8 +23,16 @@ async function kaikkiSoittimet() {
         // Iteroidaan läpi jokaisen vastaantulevan valuen, tässä tapauksessa ne ovat yksittäisiä soitin dictionaryjä
         for (const index in arvo) {
             let p = document.createElement("p")
+            let delBtn = document.createElement("i")
+            delBtn.id = data[avain][index].uniqueID
+            delBtn.classList.add("bi", "bi-x-lg", "delBtn")
+            delBtn.addEventListener("click", (event) => { 
+                console.log(delBtn.id)
+                // poistaSoitin(event)
+            })
             p.classList.add("lead", "fs-5", "fw-semibold", "my-4")
             p.textContent = "\t" + data[avain][index].valmistaja + " "+ data[avain][index].malli + ", vuodelta: " + data[avain][index].vuosi
+            p.appendChild(delBtn)
             mainContent.appendChild(p)
         }
     }
