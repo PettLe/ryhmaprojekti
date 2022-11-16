@@ -3,3 +3,5 @@ project_db.py
 __pycache__
 main.py
 project_database.py
+MySQL.session.sql 
+ProjektiSQL.session.sql 

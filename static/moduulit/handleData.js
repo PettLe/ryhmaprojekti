@@ -4,27 +4,37 @@ let bassot = []
 let rummut = []
 let instrumentit = {}
 
+// Funktio joka luo uniikin ID:n myöhempää tunnistamista varten jokaiselle databaseen lisätylle soittimelle
+function uniqueID() {
+    return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()))
+    }
 
 // Omat Luokat jokaiselle soitintyypille
 class Kitara {
-    constructor(valmistaja, malli, vuosi) {
+    constructor(tyyppi, valmistaja, malli, vuosi, uid) {
+    this.tyyppi = tyyppi
     this.valmistaja = valmistaja
     this.malli = malli
     this.vuosi = vuosi
+    this.uid = uid
     }
 }
 class Basso {
-    constructor(valmistaja, malli, vuosi) {
+    constructor(tyyppi, valmistaja, malli, vuosi, uid) {
+    this.tyyppi = tyyppi
     this.valmistaja = valmistaja
     this.malli = malli
 	this.vuosi = vuosi
+    this.uid = uid
 }
 }
 class Rummut {
-    constructor(valmistaja, malli, vuosi) {
+    constructor(tyyppi, valmistaja, malli, vuosi, uid) {
+    this.tyyppi = tyyppi
     this.valmistaja = valmistaja
     this.malli = malli
     this.vuosi = vuosi
+    this.uid = uid
     }
 }
 
@@ -33,13 +43,13 @@ class Rummut {
 function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) { 
 	let soitin;
     if (soitinTyyppi === "kitara") {
-        soitin = new Kitara(valmistaja, malli, vuosi)
+        soitin = new Kitara(soitinTyyppi, valmistaja, malli, vuosi, uniqueID())
         // kitarat.push(guitar)
     } else if (soitinTyyppi == "basso") {
-        soitin = new Basso(valmistaja, malli, vuosi)
+        soitin = new Basso(soitinTyyppi, valmistaja, malli, vuosi, uniqueID())
         // bassot.push(bass)
     } else if (soitinTyyppi == "rummut") {
-        soitin = new Rummut(valmistaja, malli, vuosi)
+        soitin = new Rummut(soitinTyyppi, valmistaja, malli, vuosi, uniqueID())
         // rummut.push(drums)
     }
 
@@ -101,4 +111,4 @@ function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
 // fetch('/testi')
 //   .then((res)=>{ res.json().then(json => { soittimet = json}) })
 
-export { instrumentit, luoSoitin };
+export { instrumentit, luoSoitin, uniqueID };
