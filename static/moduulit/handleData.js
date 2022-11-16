@@ -97,5 +97,8 @@ function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
 // luoSoitin("rummut", "Pearl", "En tiedä rummuista mitään", 2018)
 // luoSoitin("kitara", "Fender", "Stratocaster", 1954)
 // luoSoitin("basso", "Ibanez", "Hevikeppi", 2012)
+// let soittimet = []
+// fetch('/testi')
+//   .then((res)=>{ res.json().then(json => { soittimet = json}) })
 
 export { instrumentit, luoSoitin };

@@ -1,7 +1,18 @@
 import mysql.connector
-from project_database import cursor,conn_db
+from app import cursor,conn_db
 from flask import request
 # from flask_mysqldb import MySQL
+
+# def get_all_instruments():
+#     soittimet = []
+#     sql = ("SELECT * FROM own")
+#     cursor.execute(sql)
+#     result = cursor.fetchall()
+
+#     for row in result:
+#         soittimet.push(row[1:])
+# 		# print(row[1:]) # esimerkiksi, tulostaa soittimet
+#     return soittimet
 
 def add_instrument(ad, title, ad_content):
 	# cursor = mysql.connection.cursor()
@@ -17,14 +28,6 @@ def add_instrument(ad, title, ad_content):
 	# print()
 	return cursor
 
-def get_all_instruments():
-	sql = ("SELECT * FROM own")
-	cursor.execute(sql)
-	result = cursor.fetchall()
-
-	for row in result:
-		# print(row)
-		print(row[1:]) # esimerkiksi, tulostaa soittimet
 
 def get_instrument(id):
 	sql = ("SELECT * FROM own WHERE id = %s")

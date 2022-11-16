@@ -22,7 +22,7 @@ function etusivu() {
     alateksti.textContent = "Ps. Ei hätää, hyvä tästä vielä tulee!"
     
     // Käynnistetään ajastin ja lisätään elementit sivulle mainContent-säiliöön
-    ajastin()
+    // ajastin()
     mainContent.appendChild(otsikko)
     mainContent.append(p)
     mainContent.append(timerElement)

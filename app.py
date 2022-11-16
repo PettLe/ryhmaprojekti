@@ -6,7 +6,26 @@ from project_database import conn_db,config
 # from main import add_instrument
 # from flask_sqlalchemy import SQLAlchemy
 # from datetime import datetime
+# from mysql_functions import get_all_instruments
 app = Flask(__name__)
+
+# Funktio ei toiminut (ristikutsuja) ellei sitä sijoittanut tänne.
+def get_all_instruments():
+    soittimet = {}
+    sql = ("SELECT * FROM own")
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    temp = []
+
+    for row in result:
+        soitin = {}
+        soitin['valmistaja'] = row[1]
+        soitin['malli'] = row[2]
+        soitin['vuosi'] = row[3]
+        temp.append(soitin)
+		# print(row[1:]) # esimerkiksi, tulostaa soittimet
+    soittimet['kitarat'] = temp
+    return soittimet
 
 	# MySQL tietokannan yhteys
 # app.config['MYSQL_DATABASE_URL'] = 'mysql://username:password@localhost/projectbase'
@@ -21,11 +40,18 @@ app.config['MYSQL_DB'] = config["database"]
 # app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 # cursor = mysql.connector()
 
+# Luodaan python-objekti mySQL-datasta
+testaus2 = get_all_instruments()
+print(testaus2)
 mysql = MySQL(app)
 # Käynnistettäessä avaa index.html
 @app.route('/')
 def home_page():
-    return render_template('index.html')
+	return render_template('index.html')
+
+@app.route('/testi')
+def testi():
+	return jsonify(testaus2)
 
 # luo tietueen /data, jonka avulla käsitellään dataa
 @app.route('/data', methods=['GET', 'POST'])
@@ -51,7 +77,7 @@ def luo_soitin():
 		cursor.close()	# suljetaan yhteys
 		print(result2)	
 		return result
-        # return 'Sucesss', 200
+		# return 'Sucesss', 200
 		# add_instrument(result2)
 
 @app.route('/read', methods=['GET', 'POST'])
