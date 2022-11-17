@@ -104,6 +104,10 @@ def luo_soitin():
 		return result
 		# return 'Sucesss', 200
 		# add_instrument(result2)
+  
+@app.route('/delete', methods=['GET', 'POST'])
+def poista_soitin():
+    pass
 
 @app.route('/read', methods=['GET', 'POST'])
 def tulosta_soittimet(id):

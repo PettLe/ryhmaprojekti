@@ -111,4 +111,28 @@ function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
 // fetch('/testi')
 //   .then((res)=>{ res.json().then(json => { soittimet = json}) })
 
-export { instrumentit, luoSoitin, uniqueID };
+//Delete-toiminnallisuus. Lähetetään Flaskille viestin "del", ja poistettavan kohteen ID.
+function poistaSoitin(id) {
+    fetch("http://127.0.0.1:5000/delete", 
+    {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+        },
+    // Stringifyllä data muutetaan JSON-muotoon.
+    body:JSON.stringify(("del", id))}).then(res=>{
+            if(res.ok){
+                return res.json()
+            }else{
+                alert("Poisto ei onnistu")
+            }
+        }).then(jsonResponse=>{
+            
+            // Console.logataan data
+            console.log(jsonResponse)
+        } 
+        ).catch((err) => console.error(err));
+    }
+
+export { instrumentit, luoSoitin, uniqueID, poistaSoitin };
