@@ -4,5 +4,4 @@ __pycache__
 main.py
 project_database.py
 MySQL.session.sql 
-ProjektiSQL.session.sql 
-main.py
+ProjektiSQL.session.sql
