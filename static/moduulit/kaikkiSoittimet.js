@@ -30,9 +30,9 @@ async function kaikkiSoittimet() {
             delBtn.classList.add("bi", "bi-x-lg", "delBtn")
             p.id = data[avain][index].uniqueID
             delBtn.addEventListener("click", (event) => {
-                document.getElementById(delBtn.id).outerHTML = "";
-                console.log(delBtn.id)
-                // poistaSoitin(delBtn.id) Lähetetään kohteen id eteenpäin
+                document.getElementById(delBtn.id).outerHTML = ""; // Poistetaan kaikki HTML p-elementistä jonka ID on sama kuin poistonappulan ID
+                // console.log(delBtn.id)
+                poistaSoitin(delBtn.id) //Lähetetään kohteen id eteenpäin, jotta voidaan myöhemmin SQL:stä etsiä sitä vastaava soitin
             })
             p.classList.add("lead", "fs-5", "fw-semibold", "my-4")
             p.textContent = "\t" + data[avain][index].valmistaja + " "+ data[avain][index].malli + ", vuodelta: " + data[avain][index].vuosi

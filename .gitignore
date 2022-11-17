@@ -1,6 +1,6 @@
 env/
 project_db.py
-__pycache__
+__pycache__/
 project_database.py
 MySQL.session.sql 
 ProjektiSQL.session.sql

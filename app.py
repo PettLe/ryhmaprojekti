@@ -107,7 +107,14 @@ def luo_soitin():
   
 @app.route('/delete', methods=['GET', 'POST'])
 def poista_soitin():
-    pass
+    id = request.get_json()	# Saadaan poistettavan kohteen ID JavaScriptiltä
+    if request.method == 'POST':
+        sql = ("DELETE FROM own WHERE uniqueID = %s")
+        cursor.execute(sql,(id,))
+        conn_db.commit()
+        print(id)
+        print("Soittimen ilmoitus poistettu.")
+        return id
 
 @app.route('/read', methods=['GET', 'POST'])
 def tulosta_soittimet(id):

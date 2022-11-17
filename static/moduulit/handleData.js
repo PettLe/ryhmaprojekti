@@ -121,7 +121,7 @@ function poistaSoitin(id) {
             'Accept': 'application/json'
         },
     // Stringifyllä data muutetaan JSON-muotoon.
-    body:JSON.stringify(("del", id))}).then(res=>{
+    body:JSON.stringify(id)}).then(res=>{
             if(res.ok){
                 return res.json()
             }else{
