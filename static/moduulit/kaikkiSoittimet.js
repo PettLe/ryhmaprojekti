@@ -26,7 +26,9 @@ async function kaikkiSoittimet() {
             let delBtn = document.createElement("i")
             delBtn.id = data[avain][index].uniqueID
             delBtn.classList.add("bi", "bi-x-lg", "delBtn")
-            delBtn.addEventListener("click", (event) => { 
+            p.id = data[avain][index].uniqueID
+            delBtn.addEventListener("click", (event) => {
+                document.getElementById(delBtn.id).outerHTML = "";
                 console.log(delBtn.id)
                 // poistaSoitin(event)
             })
