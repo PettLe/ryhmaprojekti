@@ -22,9 +22,6 @@ app.config['MYSQL_DB'] = config["database"]
 # app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 # cursor = mysql.connector()
 
-# Luodaan python-objekti mySQL-datasta
-# testaus2 = get_all_instruments()
-# print(testaus2)
 mysql = MySQL(app)
 
 # Käytetty luomaan kaksi uutta columnia
@@ -64,7 +61,6 @@ def get_all_instruments():
 			rummut.append(soitin)
 		else:
 			kitarat.append(soitin)
-		# print(row[1:]) # esimerkiksi, tulostaa soittimet
 	soittimet['kitarat'] = kitarat
 	soittimet['bassot'] = bassot
 	soittimet['rummut'] = rummut
@@ -75,20 +71,11 @@ def get_all_instruments():
 def home_page():
 	return render_template('index.html')
 
-# @app.route('/testi')
-# def testi():
-# 	return jsonify(get_all_instruments())
-
 # luo tietueen /data, jonka avulla käsitellään dataa
 @app.route('/data', methods=['GET', 'POST'])
 def luo_soitin():
 	if request.method == 'GET':     # GET request
-		# cursor = mysql.connection.cursor()
-		# sql = "SELECT * FROM own"
-		# cursor.execute(sql)
-		# result = cursor.fetchall()
 		print("Tapahtui GET request")
-		# print(result)
 		return jsonify(get_all_instruments())     # serialize and use JSON headers
 
 	if request.method == 'POST':	 # POST request
@@ -97,13 +84,10 @@ def luo_soitin():
 		result = request.get_json()	# saadaan frontista json tiedostona
 		result2 = (result["uid"], result["tyyppi"], result["valmistaja"], result["malli"], result["vuosi"])	# muotoillaan json tiedosto ymmärrettävään muotoon
 		cursor.execute(sql, result2)	 # suoritetaan käsky db:n
-		# conn_db.commit()
 		mysql.connection.commit()	# suoritetaan muutos
 		cursor.close()	# suljetaan yhteys
 		print(result2)	
 		return result
-		# return 'Sucesss', 200
-		# add_instrument(result2)
   
 @app.route('/delete', methods=['GET', 'POST'])
 def poista_soitin():
@@ -115,16 +99,6 @@ def poista_soitin():
 		print(id)
 		print("Soittimen ilmoitus poistettu.")
 		return id
-
-# @app.route('/read', methods=['GET', 'POST'])
-# def tulosta_soittimet(id):
-# 	if request.method =='POST':
-# 		sql = ("SELECT * FROM own ")
-# 		cursor.execute(sql, (id,))
-# 		result = cursor.fetchall()
-
-# 		for row in result:
-# 			print(row)
 
 
 if __name__=="__main__":

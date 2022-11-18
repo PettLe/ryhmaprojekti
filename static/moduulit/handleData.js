@@ -81,35 +81,6 @@ function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
             } 
             ).catch((err) => console.error(err));
 		}
-// 	fetch("http://127.0.0.1:5000/read", 
-//         {
-//             method: 'GET',
-//             headers: {
-//                 'Content-type': 'application/json',
-//                 'Accept': 'application/json'
-//             },
-//         // Stringifyllä data muutetaan JSON-muotoon.
-//         body:JSON.stringify(soitin)}).then(res=>{
-//                 if(res.ok){
-//                     return res.json()
-//                 }else{
-//                     alert("AAAA EI TOIMIIII")
-//                 }
-//             }).then(jsonResponse=>{
-                
-//                 // Console.logataan data
-//                 console.log(jsonResponse)
-//             } 
-//             ).catch((err) => console.error(err));
-// }
-// Kovakoodataan muutama instrumentti
-// luoSoitin("kitara", "Gibson", "Les Paul", 1952)
-// luoSoitin("rummut", "Pearl", "En tiedä rummuista mitään", 2018)
-// luoSoitin("kitara", "Fender", "Stratocaster", 1954)
-// luoSoitin("basso", "Ibanez", "Hevikeppi", 2012)
-// let soittimet = []
-// fetch('/testi')
-//   .then((res)=>{ res.json().then(json => { soittimet = json}) })
 
 //Delete-toiminnallisuus. Lähetetään Flaskille viestin "del", ja poistettavan kohteen ID.
 function poistaSoitin(id) {
