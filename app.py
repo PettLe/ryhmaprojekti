@@ -40,6 +40,7 @@ mysql = MySQL(app)
 
 # Funktio ei toiminut (ristikutsuja) ellei sitä sijoittanut tänne.
 def get_all_instruments():
+	cursor = mysql.connection.cursor()
 	soittimet = {}
 	sql = ("SELECT * FROM own")
 	cursor.execute(sql)
@@ -74,30 +75,29 @@ def get_all_instruments():
 def home_page():
 	return render_template('index.html')
 
-@app.route('/testi')
-def testi():
-	return jsonify(get_all_instruments())
+# @app.route('/testi')
+# def testi():
+# 	return jsonify(get_all_instruments())
 
 # luo tietueen /data, jonka avulla käsitellään dataa
 @app.route('/data', methods=['GET', 'POST'])
 def luo_soitin():
 	if request.method == 'GET':     # GET request
-		cursor = mysql.connection.cursor()
-		sql = "SELECT * FROM own"
-		cursor.execute(sql)
-		result = cursor.fetchall()
-
-		print(result)
-		return result     # serialize and use JSON headers
+		# cursor = mysql.connection.cursor()
+		# sql = "SELECT * FROM own"
+		# cursor.execute(sql)
+		# result = cursor.fetchall()
+		print("Tapahtui GET request")
+		# print(result)
+		return jsonify(get_all_instruments())     # serialize and use JSON headers
 
 	if request.method == 'POST':	 # POST request
 		cursor = mysql.connection.cursor()   # luo yhteyden db:n
 		sql = "INSERT INTO own (uniqueID, instrument, ad, title, ad_content) VALUES (%s, %s, %s, %s, %s)" # luodaan tableliin uusi soitin 
 		result = request.get_json()	# saadaan frontista json tiedostona
-		# result2 = add_instrument(result["valmistaja"],result["malli"],result["vuosi"])
-		result2 = (result["uid"], result["tyyppi"], result["valmistaja"],result["malli"], result["vuosi"])	# muotoillaan json tiedosto ymmärrettävään muotoon
-		# cursor.execute(result2)	 # suoritetaan käsky db:n
+		result2 = (result["uid"], result["tyyppi"], result["valmistaja"], result["malli"], result["vuosi"])	# muotoillaan json tiedosto ymmärrettävään muotoon
 		cursor.execute(sql, result2)	 # suoritetaan käsky db:n
+		# conn_db.commit()
 		mysql.connection.commit()	# suoritetaan muutos
 		cursor.close()	# suljetaan yhteys
 		print(result2)	
@@ -107,24 +107,24 @@ def luo_soitin():
   
 @app.route('/delete', methods=['GET', 'POST'])
 def poista_soitin():
-    id = request.get_json()	# Saadaan poistettavan kohteen ID JavaScriptiltä
-    if request.method == 'POST':
-        sql = ("DELETE FROM own WHERE uniqueID = %s")
-        cursor.execute(sql,(id,))
-        conn_db.commit()
-        print(id)
-        print("Soittimen ilmoitus poistettu.")
-        return id
+	id = request.get_json()	# Saadaan poistettavan kohteen ID JavaScriptiltä
+	if request.method == 'POST':
+		sql = ("DELETE FROM own WHERE uniqueID = %s")
+		cursor.execute(sql,(id,))
+		conn_db.commit()
+		print(id)
+		print("Soittimen ilmoitus poistettu.")
+		return id
 
-@app.route('/read', methods=['GET', 'POST'])
-def tulosta_soittimet(id):
-	if request.method =='POST':
-		sql = ("SELECT * FROM own ")
-		cursor.execute(sql, (id,))
-		result = cursor.fetchall()
+# @app.route('/read', methods=['GET', 'POST'])
+# def tulosta_soittimet(id):
+# 	if request.method =='POST':
+# 		sql = ("SELECT * FROM own ")
+# 		cursor.execute(sql, (id,))
+# 		result = cursor.fetchall()
 
-		for row in result:
-			print(row)
+# 		for row in result:
+# 			print(row)
 
 
 if __name__=="__main__":

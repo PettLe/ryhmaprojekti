@@ -2,7 +2,7 @@ import { poistaSoitin } from "./handleData.js";
 
 async function kaikkiSoittimet() {
     // Noudetaan fetch()-funktiolla mySQL-data Flaskiltä. Awaitillä odotetaan vastausta ja datan latautumista ennen kuin jatketaan eteenpäin
-    let response = await fetch('/testi')
+    let response = await fetch('/data', {method: 'GET'})
     let data = await response.json()
     console.log(data)
 
