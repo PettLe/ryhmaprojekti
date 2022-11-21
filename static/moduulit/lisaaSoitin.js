@@ -77,20 +77,53 @@ function lisaaSoitin() {
     yearDiv.classList.add("row")
     yearDiv.appendChild(yearLabel)
     yearDiv.appendChild(year)
-
-
+	
     let submitBtn = document.createElement("button")
     submitBtn.type = "button"
+	// submitBtn.onclick = "tulostaInfo()"	// <-- Käyttäjälle tulostus ilm.
     submitBtn.textContent = "Lisää tietokantaan"
-    submitBtn.classList.add("btn", "btn-dark", "w-50", "position-absolute", "top-100", "start-50", "translate-middle", "mt-5")
+    submitBtn.classList.add("btn", "btn-dark", "w-50", "position-relative", "top-25", "start-50", "translate-middle", "mt-5")
     let submitDiv = document.createElement("div")
     submitDiv.classList.add("row", "position-relative")
     submitDiv.appendChild(submitBtn)
-    
+	// ------------------------------------------
+	
+	let output = document.createElement("p")
+	output.id = "testi"
+	output.type = "text"
+	output.textContent = ""
+	// output.onclick = "tulostaInfo()"
+	output.classList.add("position-absolute", "mb-50", "top-100", "start-25", "fs-3", "fw-bolder", "my-4")
+	
+	
+	let infoDiv = document.createElement("div")
+	infoDiv.classList.add("row")
+	// infoDiv.appendChild(output)
+	submitDiv.appendChild(output)
+	
+    // submitDiv.appendChild(output)
+ 	// console.log(mainContent.childNodes);
+
+ 	// console.log(mainContent.previousSibling);
+ 	// console.log(mainContent.nextSibling);
+	// Käyttäjälle tuotteen tulostus
+	function tulostaInfo() {
+		let tyyppiInfo = " " + tyyppi.value;
+		let brandInfo = ", Valmistaja: " + brand.value;
+		let modelInfo = ", Malli: " + model.value;
+		let yearInfo = ", Vuosimalli: " + year.value;
+		let tulostus = "Lisäsit soittimen: " + tyyppiInfo + brandInfo + modelInfo + yearInfo;
+		output.textContent = tulostus;
+		// document.getElementById("testi").textContent = tulostus;
+	}
+
+	
+	// ---------------------------------------------
+
     // Submit-nappulaa painaessa kerätään tiedot .valuen avulla jokaisesta kentästä. Jos jokainen kenttä on täytetty niin
     // niin kutsutaan luoSoitin-funktiota lisäämään tiedot tietokantaan. Sen jälkeen nollataan Form.
     submitBtn.addEventListener("click", () => {
-        let tyyppiInfo = tyyppi.value
+		let tyyppiInfo = tyyppi.value
         let brandInfo = brand.value
         let modelInfo = model.value
         let yearInfo = year.value
@@ -98,10 +131,16 @@ function lisaaSoitin() {
         //.submit() pitäisi lähettää form-data Flaskille method="POST" kautta. ei toimi.
         // form.submit()
         if (brandInfo.length > 1 && modelInfo.length > 1 && yearInfo.length == 4) {
-            luoSoitin(tyyppiInfo, brandInfo, modelInfo, yearInfo)
+			luoSoitin(tyyppiInfo, brandInfo, modelInfo, yearInfo)
+			tulostaInfo();
             form.reset();
+			// alert("Loit soittimen: " + tyyppiInfo + ", Valmistaja: " + brandInfo + ", Malli: " + modelInfo + ", Vuosimalli: " + yearInfo);
+			// tulostusInfo(tyyppiInfo, brandInfo, modelInfo, yearInfo)
         }
-    })
+		
+		})
+		// console.log("Soitin: " + tyyppi.value);
+		// console.log(FormData.classList.contains("form-control"));
 
     // Lisätään jokainen label + input -div ja submit button Formiin. Sen jälkeen koko Form lisätään jälleen mainContentiin.
     form.appendChild(tyyppiDiv);
@@ -109,8 +148,11 @@ function lisaaSoitin() {
     form.appendChild(modelDiv)
     form.appendChild(yearDiv)
     form.appendChild(submitDiv)
+    // form.appendChild(infoDiv)
 
     mainContent.appendChild(form)
-}
+    mainContent.appendChild(infoDiv)
+    // mainContent.append(form)
 
+}
 export {lisaaSoitin};

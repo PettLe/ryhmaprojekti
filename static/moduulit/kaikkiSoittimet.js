@@ -2,7 +2,8 @@ import { poistaSoitin } from "./handleData.js";
 
 async function kaikkiSoittimet() {
     // Noudetaan fetch()-funktiolla mySQL-data Flaskiltä. Awaitillä odotetaan vastausta ja datan latautumista ennen kuin jatketaan eteenpäin
-    let response = await fetch('/testi')
+    
+	let response = await fetch('/testi')
     let data = await response.json()
     console.log(data)
 
@@ -30,8 +31,9 @@ async function kaikkiSoittimet() {
             delBtn.classList.add("bi", "bi-x-lg", "delBtn")
             p.id = data[avain][index].uniqueID
             delBtn.addEventListener("click", (event) => {
-                document.getElementById(delBtn.id).outerHTML = "";
-                console.log(delBtn.id)
+                document.getElementById(delBtn.id).outerHTML = ""; // Poistetaan kaikki HTML p-elementistä jonka ID on sama kuin poistonappulan ID
+                // console.log(delBtn.id)
+				poistaSoitin(delBtn.id) //Lähetetään kohteen id eteenpäin, jotta voidaan myöhemmin SQL:stä etsiä sitä vastaava soitin
                 // poistaSoitin(delBtn.id) Lähetetään kohteen id eteenpäin
             })
             p.classList.add("lead", "fs-5", "fw-semibold", "my-4")
