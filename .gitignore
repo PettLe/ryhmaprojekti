@@ -4,3 +4,4 @@ __pycache__/
 project_database.py
 MySQL.session.sql 
 ProjektiSQL.session.sql
+.vscode/

@@ -69,9 +69,10 @@ function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
             },
         // Stringifyllä data muutetaan JSON-muotoon.
         body:JSON.stringify(soitin)}).then(res=>{
-                if(res.ok){
+                if (res.ok) {
                     return res.json()
-                }else{
+                }
+				else {
                     alert("AAAA EI TOIMIIII")
                 }
             }).then(jsonResponse=>{
