@@ -21,7 +21,6 @@ app.config['MYSQL_PASSWORD'] = config["password"]
 app.config['MYSQL_DB'] = config["database"]
 # app.config['MYSQL_CURSORCLASS'] = "DictCursor"
 # cursor = mysql.connector()
-
 mysql = MySQL(app)
 
 # Käytetty luomaan kaksi uutta columnia
