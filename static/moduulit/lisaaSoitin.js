@@ -132,15 +132,11 @@ function lisaaSoitin() {
         // form.submit()
         if (brandInfo.length > 1 && modelInfo.length > 1 && yearInfo.length == 4) {
 			luoSoitin(tyyppiInfo, brandInfo, modelInfo, yearInfo)
-			tulostaInfo();
+			tulostaInfo(); // Kutsuu funktiota joka hoitaa soittimen tiedot käyttäjälle.
             form.reset();
 			// alert("Loit soittimen: " + tyyppiInfo + ", Valmistaja: " + brandInfo + ", Malli: " + modelInfo + ", Vuosimalli: " + yearInfo);
-			// tulostusInfo(tyyppiInfo, brandInfo, modelInfo, yearInfo)
         }
-		
-		})
-		// console.log("Soitin: " + tyyppi.value);
-		// console.log(FormData.classList.contains("form-control"));
+	})
 
     // Lisätään jokainen label + input -div ja submit button Formiin. Sen jälkeen koko Form lisätään jälleen mainContentiin.
     form.appendChild(tyyppiDiv);

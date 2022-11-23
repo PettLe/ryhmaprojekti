@@ -99,6 +99,7 @@ def poista_soitin():
 		print("Soittimen ilmoitus poistettu.")
 		return id
 
+# @app.route()
 
 if __name__=="__main__":
 	app.run(debug=True)

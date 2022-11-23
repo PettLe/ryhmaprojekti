@@ -1,6 +1,7 @@
 import {kaikkiSoittimet} from "./kaikkiSoittimet.js"
 import {lisaaSoitin} from "./lisaaSoitin.js"
 import {etusivu} from "./etusivu.js"
+import {haeSoitin} from "./haeSoitin.js"
 
 function NavBar() {
     // Etsitään index.html:stä tyhjä UL, luodaan yksitellen Li-muodossa linkit ja lisätään ne sitten UL:ään.
@@ -29,7 +30,7 @@ function NavBar() {
         link3.textContent = "Hae soitinta"
         navbar.appendChild(link3)
         link3.addEventListener("click", () => {
-            kaikkiSoittimet()
+            haeSoitin()
         })
 
         let link4 = document.createElement("li")
