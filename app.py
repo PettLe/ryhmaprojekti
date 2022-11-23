@@ -29,7 +29,7 @@ mysql = MySQL(app)
 #         ADD uniqueID VARCHAR(250) \
 #         AFTER id"
 # query2 = "ALTER TABLE own \
-#         ADD type VARCHAR(50) \
+#         ADD instrument VARCHAR(50) \
 #         AFTER uniqueID"
 
 # cursor.execute(query)
