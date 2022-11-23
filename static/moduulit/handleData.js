@@ -1,7 +1,4 @@
-// Apulistat (ja dictionary) datan väliaikaseen käsittelyyn
-let kitarat = []
-let bassot = []
-let rummut = []
+// Dictionary datan väliaikaseen käsittelyyn
 let instrumentit = {}
 
 // Funktio joka luo uniikin ID:n myöhempää tunnistamista varten jokaiselle databaseen lisätylle soittimelle
@@ -39,24 +36,15 @@ class Rummut {
 }
 
 // Funktio joka tunnistaa soitinTyyppi-parametrin avulla soitintyypin ja sen perusteella luo Luokka-objektin soittimesta.
-// Sen jälkeen uusi soitin pushataan omaan listaansa
 function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) { 
 	let soitin;
     if (soitinTyyppi === "kitara") {
         soitin = new Kitara(soitinTyyppi, valmistaja, malli, vuosi, uniqueID())
-        // kitarat.push(guitar)
     } else if (soitinTyyppi == "basso") {
         soitin = new Basso(soitinTyyppi, valmistaja, malli, vuosi, uniqueID())
-        // bassot.push(bass)
     } else if (soitinTyyppi == "rummut") {
         soitin = new Rummut(soitinTyyppi, valmistaja, malli, vuosi, uniqueID())
-        // rummut.push(drums)
     }
-
-    // Instrumentit on dictionary, johon lisätään jokaisen soitintyypin omat listat
-    instrumentit["kitarat"] = kitarat
-    instrumentit["bassot"] = bassot
-    instrumentit["rummut"] = rummut
 
 
     // Lähettää instrumentit-arrayn Flaskille
@@ -83,7 +71,7 @@ function luoSoitin(soitinTyyppi, valmistaja, malli, vuosi) {
             ).catch((err) => console.error(err));
 		}
 
-//Delete-toiminnallisuus. Lähetetään Flaskille viestin "del", ja poistettavan kohteen ID.
+// Delete-toiminnallisuus. Lähetetään Flaskille poistettavan kohteen ID.
 function poistaSoitin(id) {
     fetch("http://127.0.0.1:5000/delete", 
     {

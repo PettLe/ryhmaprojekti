@@ -5,7 +5,7 @@ import mysql.connector
 config = {
 	'host': "localhost",
 	'user': "root",
-	'password': "deathbase",
+	'password': "kalervo82",
 	'database': "projectbase" # Uusi database nimi 
 }
 conn_db = mysql.connector.connect(**config)

@@ -39,8 +39,6 @@ function NavBar() {
         navbar.appendChild(link4)
         link4.addEventListener("click", () => {
             kaikkiSoittimet()
-        })
-   
-}
+        })}
 
 export { NavBar }

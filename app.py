@@ -1,26 +1,18 @@
 import mysql.connector
 from flask import Flask, render_template, request, jsonify
-# from project_database import cursor
 from flask_mysqldb import MySQL
 from project_database import conn_db,config
-# from main import add_instrument
-# from flask_sqlalchemy import SQLAlchemy
-# from datetime import datetime
-# from mysql_functions import get_all_instruments
+
 app = Flask(__name__)
 
-# MySQL tietokannan yhteys
-# app.config['MYSQL_DATABASE_URL'] = 'mysql://username:password@localhost/projectbase'
-# app.config['MYSQL_DATABASE_URL'] = 'mysql://root:deathbase@localhost/own'
-# conn_db = mysql.connector.connect(host = "localhost", user = "root",passwd = "deathbase",database = "projectbase")
+
 cursor = conn_db.cursor()
 
+# Haetaan configit, jotka on piilotettuna toisessa tiedostossa
 app.config['MYSQL_HOST'] = config["host"]
 app.config['MYSQL_USER'] = config["user"]
 app.config['MYSQL_PASSWORD'] = config["password"]
 app.config['MYSQL_DB'] = config["database"]
-# app.config['MYSQL_CURSORCLASS'] = "DictCursor"
-# cursor = mysql.connector()
 
 mysql = MySQL(app)
 
@@ -35,7 +27,7 @@ mysql = MySQL(app)
 # cursor.execute(query)
 # cursor.execute(query2)
 
-# Funktio ei toiminut (ristikutsuja) ellei sitä sijoittanut tänne.
+# Haetaan kaikki soittimet mySQL:stä
 def get_all_instruments():
 	cursor = mysql.connection.cursor()
 	soittimet = {}
@@ -85,8 +77,7 @@ def luo_soitin():
 		result2 = (result["uid"], result["tyyppi"], result["valmistaja"], result["malli"], result["vuosi"])	# muotoillaan json tiedosto ymmärrettävään muotoon
 		cursor.execute(sql, result2)	 # suoritetaan käsky db:n
 		mysql.connection.commit()	# suoritetaan muutos
-		cursor.close()	# suljetaan yhteys
-		print(result2)	
+		cursor.close()	# suljetaan yhteys	
 		return result
   
 @app.route('/delete', methods=['GET', 'POST'])
@@ -96,8 +87,6 @@ def poista_soitin():
 		sql = ("DELETE FROM own WHERE uniqueID = %s")
 		cursor.execute(sql,(id,))
 		conn_db.commit()
-		print(id)
-		print("Soittimen ilmoitus poistettu.")
 		return id
 
 

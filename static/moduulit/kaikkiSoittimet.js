@@ -4,7 +4,7 @@ async function kaikkiSoittimet() {
     // Noudetaan fetch()-funktiolla mySQL-data Flaskiltä. Awaitillä odotetaan vastausta ja datan latautumista ennen kuin jatketaan eteenpäin
     let response = await fetch('/data', {method: 'GET'})
     let data = await response.json()
-    console.log(data)
+    // console.log(data)
 
 
     // Etsitään HTML:stä id:n perusteella mainContent boksi. Tyhjennetään sen innerHTML.
@@ -12,6 +12,7 @@ async function kaikkiSoittimet() {
     mainContent.innerHTML = ""
     let h2 = document.createElement("h2")
     h2.textContent = "Tietokannasta löytyvät soittimet:"
+    h2.classList.add("text-decoration-underline")
     mainContent.appendChild(h2)
 
     // Iteroidaan läpi instrumentit-dictionaryn hakien sieltä avain-arvo -parit. Tässä tapauksessa arvo on uusi dictionary yksittäisestä soittimesta
@@ -31,7 +32,6 @@ async function kaikkiSoittimet() {
             p.id = data[avain][index].uniqueID
             delBtn.addEventListener("click", (event) => {
                 document.getElementById(delBtn.id).outerHTML = ""; // Poistetaan kaikki HTML p-elementistä jonka ID on sama kuin poistonappulan ID
-                // console.log(delBtn.id)
                 poistaSoitin(delBtn.id) //Lähetetään kohteen id eteenpäin, jotta voidaan myöhemmin SQL:stä etsiä sitä vastaava soitin
             })
             p.classList.add("lead", "fs-5", "fw-semibold", "my-4")
@@ -40,7 +40,6 @@ async function kaikkiSoittimet() {
             mainContent.appendChild(p)
         }
     }
-
 }
 
 export {kaikkiSoittimet};
