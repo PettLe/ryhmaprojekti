@@ -44,3 +44,4 @@
 
 - Käyttäjien luominen / sisäänkirjautumissysteemi
 - Käytettyjen soittimien myyminen
+- mySQL:n tietoturvan parantaminen
